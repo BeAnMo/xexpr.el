@@ -84,7 +84,7 @@
        -> <p>hey, <a href=\"example.com\">click</a> here</p>"
   (let ((xstr (xexpr--to-string xexpr)))
     (if doctype
-	(format "%s\n%s" doctype)
-      doctype)))
+	(format "%s\n%s" doctype xstr)
+      xstr)))
 
 (provide 'xexpr)
