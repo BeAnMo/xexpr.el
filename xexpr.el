@@ -63,13 +63,7 @@
 	  (end (format "</%s>" tag)))
       (format "%s%s%s" start (string-join (nreverse args) "\n") end))))
 
-(defun xexpr-to-string (xexpr)
-  "Converts the given XEXPR to a string.
-   ex:
-    '(hr) -> <hr />
-    '(p \"hello\") -> <p>hello</p>
-    '(p \"hey, \" (a ((href . \"example.com\")) \"click\") \" here\") 
-       -> <p>hey, <a href=\"example.com\">click</a> here</p>"
+(defun xexpr--to-string (xexpr)
   (cond
    ((null xexpr) "")
    ((xexpr--atom-p xexpr) (xexpr--atom-to-string xexpr))
@@ -80,5 +74,17 @@
 	 (xexpr--2-nodes-to-string xexpr))
 	((pred listp)
 	 (xexpr--n-nodes-to-string xexpr))))))
+
+(defun xexpr-to-string (xexpr &optional doctype)
+  "Converts the given XEXPR to a string. Prepend DOCTYPE if provided.
+   ex:
+    '(hr) -> <hr />
+    '(p \"hello\") -> <p>hello</p>
+    '(p \"hey, \" (a ((href . \"example.com\")) \"click\") \" here\") 
+       -> <p>hey, <a href=\"example.com\">click</a> here</p>"
+  (let ((xstr (xexpr--to-string xexpr)))
+    (if doctype
+	(format "%s\n%s" doctype)
+      doctype)))
 
 (provide 'xexpr)
