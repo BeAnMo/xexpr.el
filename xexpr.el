@@ -34,7 +34,7 @@
     ((pred xexpr--atom-p)
      (format "<%s>%s</%s>"
 	     (car xexpr)
-	     (xexpr-to-string (cadr xexpr))
+	     (xexpr--to-string (cadr xexpr))
 	     (car xexpr)))
     ((pred xexpr--attrs-p)
      (format "<%s %s></%s>"
@@ -44,7 +44,7 @@
     ((pred listp)
      (format "<%s>%s</%s>"
 	     (car xexpr)
-	     (xexpr-to-string (cadr xexpr))
+	     (xexpr--to-string (cadr xexpr))
 	     (car xexpr)))))
 
 (defun xexpr--n-nodes-to-string (xexpr)
@@ -56,7 +56,7 @@
       (setq attrs (xexpr--attrs-to-string (car children)))
       (setq children (cdr children)))
     (dolist (child children args)
-      (setq args (cons (xexpr-to-string child) args)))
+      (setq args (cons (xexpr--to-string child) args)))
     (let ((start (if attrs
 		     (format "<%s %s>" tag attrs)
 		   (format "<%s>" tag)))
